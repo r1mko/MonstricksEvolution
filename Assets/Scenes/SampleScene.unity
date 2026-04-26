@@ -6032,7 +6032,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 2463.0015}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &392349920
@@ -28111,105 +28111,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoreManager
   storeItems:
   - iconImage: {fileID: 1904179611}
-    nameText: {fileID: 2116855551}
-    descriptionText: {fileID: 97349965}
-    buyButton: {fileID: 1739650241}
-    unlockCost: 0
+    priceButton: 50
   - iconImage: {fileID: 1812632429}
-    nameText: {fileID: 1558343954}
-    descriptionText: {fileID: 1427432411}
-    buyButton: {fileID: 598674689}
-    unlockCost: 0
+    priceButton: 100
   - iconImage: {fileID: 553642708}
-    nameText: {fileID: 1772345292}
-    descriptionText: {fileID: 267725420}
-    buyButton: {fileID: 1469413999}
-    unlockCost: 0
+    priceButton: 300
   - iconImage: {fileID: 1154768020}
-    nameText: {fileID: 113207342}
-    descriptionText: {fileID: 170368686}
-    buyButton: {fileID: 962051486}
-    unlockCost: 0
+    priceButton: 600
   - iconImage: {fileID: 1120521145}
-    nameText: {fileID: 1607034638}
-    descriptionText: {fileID: 1491556328}
-    buyButton: {fileID: 1445738363}
-    unlockCost: 0
+    priceButton: 1500
   - iconImage: {fileID: 1992176358}
-    nameText: {fileID: 1465742257}
-    descriptionText: {fileID: 1926783336}
-    buyButton: {fileID: 1245896714}
-    unlockCost: 0
+    priceButton: 3000
   - iconImage: {fileID: 792812608}
-    nameText: {fileID: 1386155878}
-    descriptionText: {fileID: 15310285}
-    buyButton: {fileID: 93296582}
-    unlockCost: 0
+    priceButton: 8000
   - iconImage: {fileID: 1376786054}
-    nameText: {fileID: 96958001}
-    descriptionText: {fileID: 540460744}
-    buyButton: {fileID: 1817731888}
-    unlockCost: 0
+    priceButton: 15000
   - iconImage: {fileID: 85198881}
-    nameText: {fileID: 244298490}
-    descriptionText: {fileID: 2051692844}
-    buyButton: {fileID: 1996454988}
-    unlockCost: 0
+    priceButton: 40000
   - iconImage: {fileID: 689677648}
-    nameText: {fileID: 715453546}
-    descriptionText: {fileID: 734866804}
-    buyButton: {fileID: 605098514}
-    unlockCost: 0
+    priceButton: 80000
   - iconImage: {fileID: 1896746201}
-    nameText: {fileID: 60645154}
-    descriptionText: {fileID: 1802900607}
-    buyButton: {fileID: 411247802}
-    unlockCost: 0
+    priceButton: 200000
   - iconImage: {fileID: 187463160}
-    nameText: {fileID: 2031500391}
-    descriptionText: {fileID: 284164565}
-    buyButton: {fileID: 1133616375}
-    unlockCost: 0
+    priceButton: 400000
   - iconImage: {fileID: 378527754}
-    nameText: {fileID: 2063725683}
-    descriptionText: {fileID: 805445176}
-    buyButton: {fileID: 1658397280}
-    unlockCost: 0
+    priceButton: 1000000
   - iconImage: {fileID: 304823397}
-    nameText: {fileID: 1959093665}
-    descriptionText: {fileID: 1144452377}
-    buyButton: {fileID: 1302155732}
-    unlockCost: 0
+    priceButton: 2000000
   - iconImage: {fileID: 1599988679}
-    nameText: {fileID: 117498035}
-    descriptionText: {fileID: 27408247}
-    buyButton: {fileID: 1608029673}
-    unlockCost: 0
+    priceButton: 5000000
   - iconImage: {fileID: 1098447765}
-    nameText: {fileID: 864431847}
-    descriptionText: {fileID: 810682314}
-    buyButton: {fileID: 1133188099}
-    unlockCost: 0
+    priceButton: 10000000
   - iconImage: {fileID: 735383633}
-    nameText: {fileID: 823793619}
-    descriptionText: {fileID: 2002115327}
-    buyButton: {fileID: 1250964053}
-    unlockCost: 0
+    priceButton: 25000000
   - iconImage: {fileID: 727562910}
-    nameText: {fileID: 748959239}
-    descriptionText: {fileID: 1674101164}
-    buyButton: {fileID: 642036817}
-    unlockCost: 0
+    priceButton: 50000000
   - iconImage: {fileID: 1919400096}
-    nameText: {fileID: 270163906}
-    descriptionText: {fileID: 1606443989}
-    buyButton: {fileID: 809567499}
-    unlockCost: 0
+    priceButton: 120000000
   - iconImage: {fileID: 1892149835}
-    nameText: {fileID: 190447348}
-    descriptionText: {fileID: 310186332}
-    buyButton: {fileID: 883768386}
-    unlockCost: 0
+    priceButton: 250000000
   itemObjects:
   - {fileID: 207785185}
   - {fileID: 1900995819}
