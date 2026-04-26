@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 67bfe46ab2513534092bf0bb17bf35e8
+guid: cc289b63d9f93ac4a9e38699ccf8bd91
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8333949488657400961
-    second: free-icon-dollar-1490904_0
+      213: 8106185288030657044
+    second: free-icon-sword-595760_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: free-icon-dollar-1490904_0
+      name: free-icon-sword-595760_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f7bf680681dd75c80800000000000000
-      internalID: -8333949488657400961
+      spriteID: 41a90903294fe7070800000000000000
+      internalID: 8106185288030657044
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      free-icon-dollar-1490904_0: -8333949488657400961
+      free-icon-sword-595760_0: 8106185288030657044
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

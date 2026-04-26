@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 67bfe46ab2513534092bf0bb17bf35e8
+guid: fb29de199b351fb4fa8eaa98c3964b56
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8333949488657400961
-    second: free-icon-dollar-1490904_0
+      213: -1838388548011519030
+    second: free-icon-nuclear-bomb-2552870_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,12 +126,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: free-icon-dollar-1490904_0
+      name: free-icon-nuclear-bomb-2552870_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 114
         y: 0
-        width: 512
+        width: 284
         height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f7bf680681dd75c80800000000000000
-      internalID: -8333949488657400961
+      spriteID: ac390a41b5bbc76e0800000000000000
+      internalID: -1838388548011519030
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      free-icon-dollar-1490904_0: -8333949488657400961
+      free-icon-nuclear-bomb-2552870_0: -1838388548011519030
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

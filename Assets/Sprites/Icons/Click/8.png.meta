@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 67bfe46ab2513534092bf0bb17bf35e8
+guid: 41094361dae31074ab6557f2e216703c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8333949488657400961
-    second: free-icon-dollar-1490904_0
+      213: -865677463662040645
+    second: free-icon-cannon-3004989_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: free-icon-dollar-1490904_0
+      name: free-icon-cannon-3004989_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 50
         width: 512
-        height: 512
+        height: 412
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f7bf680681dd75c80800000000000000
-      internalID: -8333949488657400961
+      spriteID: bb9ec50feee7cf3f0800000000000000
+      internalID: -865677463662040645
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      free-icon-dollar-1490904_0: -8333949488657400961
+      free-icon-cannon-3004989_0: -865677463662040645
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
