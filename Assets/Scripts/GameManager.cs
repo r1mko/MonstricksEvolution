@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     private const float CLICK_SCALE = 0.8f;
     private const float ANIMATION_DURATION = 0.1f;
 
+    private long playerMoney = 0;
+    private long clickPower = 1;
+
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
     private RectTransform buttonRect;
     private Transform canvasTransform;
@@ -71,10 +74,34 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
+    public long GetMoney()
+    {
+        return playerMoney;
+    }
+
+    public long GetClickPower()
+    {
+        return clickPower;
+    }
+
+    public void AddMoney(long amount)
+    {
+        playerMoney += amount;
+        Debug.Log($"[GameManager] Money changed: {amount}. Total: {playerMoney}");
+    }
+
+    public void AddClickPower(long amount)
+    {
+        clickPower += amount;
+        Debug.Log($"[GameManager] Click Power increased by {amount}. New Power: {clickPower}");
+    }
+
     private void OnMainCharacterClick()
     {
+        Debug.Log($"[GameManager] Character Clicked! Adding {clickPower} money.");
         StartCoroutine(AnimateClick());
         SpawnFloatingText();
+        AddMoney(clickPower);
     }
 
     private IEnumerator AnimateClick()
@@ -132,19 +159,16 @@ public class GameManager : MonoBehaviour
 
         if (text != null)
         {
-            // Вытаскиваем на уровень Canvas
-            text.transform.SetParent(canvasTransform);
+            text.text = $"+{clickPower}";
 
-            // Сбрасываем скейл, чтобы он не зависел от кнопки
+            text.transform.SetParent(canvasTransform);
             text.transform.localScale = Vector3.one;
 
-            // Позиция и ротация
             Vector3 worldPos = buttonRect.position;
             float randomX = Random.Range(-randomXOffset, randomXOffset);
             text.rectTransform.position = worldPos + new Vector3(randomX, 0, 0);
             text.rectTransform.rotation = Quaternion.identity;
 
-            // Цвет
             Color c = text.color;
             c.a = 1f;
             text.color = c;
@@ -178,15 +202,11 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(waitBeforeReset);
 
-        // Возвращаем в кнопку
         text.transform.SetParent(buttonRect);
-
-        // Сброс трансформаций
         text.rectTransform.localPosition = Vector3.zero;
         text.rectTransform.localRotation = Quaternion.identity;
         text.transform.localScale = Vector3.one;
 
-        // Сброс цвета
         Color resetColor = text.color;
         resetColor.a = 1f;
         text.color = resetColor;

@@ -34323,47 +34323,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56cc8441b141e54ca8c7d0f30be6dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoreManager
+  gameManager: {fileID: 1999124983}
   storeItems:
   - iconImage: {fileID: 1904179611}
-    priceButton: 50
+    buyButton: {fileID: 1739650241}
+    cost: 50
+    bonusValue: 1
+    upgradeType: 1
   - iconImage: {fileID: 1812632429}
-    priceButton: 100
+    buyButton: {fileID: 598674689}
+    cost: 100
+    bonusValue: 1
+    upgradeType: 0
   - iconImage: {fileID: 553642708}
-    priceButton: 300
+    buyButton: {fileID: 1469413999}
+    cost: 300
+    bonusValue: 5
+    upgradeType: 1
   - iconImage: {fileID: 1154768020}
-    priceButton: 600
+    buyButton: {fileID: 962051486}
+    cost: 600
+    bonusValue: 5
+    upgradeType: 0
   - iconImage: {fileID: 1120521145}
-    priceButton: 1500
+    buyButton: {fileID: 1445738363}
+    cost: 1500
+    bonusValue: 25
+    upgradeType: 1
   - iconImage: {fileID: 1992176358}
-    priceButton: 3000
+    buyButton: {fileID: 1245896714}
+    cost: 3000
+    bonusValue: 25
+    upgradeType: 0
   - iconImage: {fileID: 792812608}
-    priceButton: 8000
+    buyButton: {fileID: 93296582}
+    cost: 8000
+    bonusValue: 100
+    upgradeType: 1
   - iconImage: {fileID: 1376786054}
-    priceButton: 15000
+    buyButton: {fileID: 1817731888}
+    cost: 15000
+    bonusValue: 100
+    upgradeType: 0
   - iconImage: {fileID: 85198881}
-    priceButton: 40000
+    buyButton: {fileID: 1996454988}
+    cost: 40000
+    bonusValue: 500
+    upgradeType: 1
   - iconImage: {fileID: 689677648}
-    priceButton: 80000
+    buyButton: {fileID: 605098514}
+    cost: 80000
+    bonusValue: 500
+    upgradeType: 0
   - iconImage: {fileID: 1896746201}
-    priceButton: 200000
+    buyButton: {fileID: 411247802}
+    cost: 200000
+    bonusValue: 2500
+    upgradeType: 1
   - iconImage: {fileID: 187463160}
-    priceButton: 400000
+    buyButton: {fileID: 1133616375}
+    cost: 400000
+    bonusValue: 2500
+    upgradeType: 0
   - iconImage: {fileID: 378527754}
-    priceButton: 1000000
+    buyButton: {fileID: 1658397280}
+    cost: 1000000
+    bonusValue: 10000
+    upgradeType: 1
   - iconImage: {fileID: 304823397}
-    priceButton: 2000000
+    buyButton: {fileID: 1302155732}
+    cost: 2000000
+    bonusValue: 10000
+    upgradeType: 0
   - iconImage: {fileID: 1599988679}
-    priceButton: 5000000
+    buyButton: {fileID: 1608029673}
+    cost: 5000000
+    bonusValue: 50000
+    upgradeType: 1
   - iconImage: {fileID: 1098447765}
-    priceButton: 10000000
+    buyButton: {fileID: 1133188099}
+    cost: 10000000
+    bonusValue: 50000
+    upgradeType: 0
   - iconImage: {fileID: 735383633}
-    priceButton: 25000000
+    buyButton: {fileID: 1250964053}
+    cost: 25000000
+    bonusValue: 250000
+    upgradeType: 1
   - iconImage: {fileID: 727562910}
-    priceButton: 50000000
+    buyButton: {fileID: 642036817}
+    cost: 50000000
+    bonusValue: 250000
+    upgradeType: 0
   - iconImage: {fileID: 1919400096}
-    priceButton: 120000000
+    buyButton: {fileID: 809567499}
+    cost: 120000000
+    bonusValue: 1000000
+    upgradeType: 1
   - iconImage: {fileID: 1892149835}
-    priceButton: 250000000
+    buyButton: {fileID: 883768386}
+    cost: 250000000
+    bonusValue: 1000000
+    upgradeType: 0
   itemObjects:
   - {fileID: 207785185}
   - {fileID: 1900995819}
