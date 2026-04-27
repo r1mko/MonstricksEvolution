@@ -4046,9 +4046,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1995537404}
-  - {fileID: 773062154}
+  m_Children: []
   m_Father: {fileID: 466692980}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -14640,7 +14638,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1T
+  m_text: 2T
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -15554,16 +15552,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773062153}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 224062473}
+  m_Father: {fileID: 1040658871}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -29.057, y: 0}
+  m_AnchoredPosition: {x: -32.39953, y: 0}
   m_SizeDelta: {x: 504.114, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &773062155
@@ -19946,6 +19944,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1031264864}
+  - {fileID: 1995537404}
+  - {fileID: 773062154}
   m_Father: {fileID: 466692980}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -33908,12 +33908,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995537403}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 224062473}
+  m_Father: {fileID: 1040658871}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -34462,84 +34462,111 @@ MonoBehaviour:
   - viewImage: {fileID: 572576079}
     amountButton: {fileID: 813576678}
     unlockCost: 0
+    isUnlocked: 0
   - viewImage: {fileID: 1431454742}
     amountButton: {fileID: 686706606}
     unlockCost: 120
+    isUnlocked: 0
   - viewImage: {fileID: 458140454}
     amountButton: {fileID: 570086669}
     unlockCost: 250
+    isUnlocked: 0
   - viewImage: {fileID: 1379464196}
     amountButton: {fileID: 318248348}
     unlockCost: 500
+    isUnlocked: 0
   - viewImage: {fileID: 1769316280}
     amountButton: {fileID: 1153353324}
     unlockCost: 1000
+    isUnlocked: 0
   - viewImage: {fileID: 683524942}
     amountButton: {fileID: 1551635827}
     unlockCost: 3000
+    isUnlocked: 0
   - viewImage: {fileID: 338316221}
     amountButton: {fileID: 619510343}
     unlockCost: 8000
+    isUnlocked: 0
   - viewImage: {fileID: 936841161}
     amountButton: {fileID: 1992018630}
     unlockCost: 20000
+    isUnlocked: 0
   - viewImage: {fileID: 918138023}
     amountButton: {fileID: 1118741509}
     unlockCost: 50000
+    isUnlocked: 0
   - viewImage: {fileID: 1632185460}
     amountButton: {fileID: 54717458}
     unlockCost: 120000
+    isUnlocked: 0
   - viewImage: {fileID: 488009016}
     amountButton: {fileID: 690025614}
     unlockCost: 300000
+    isUnlocked: 0
   - viewImage: {fileID: 408996770}
     amountButton: {fileID: 1958121348}
     unlockCost: 750000
+    isUnlocked: 0
   - viewImage: {fileID: 1784075626}
     amountButton: {fileID: 72833748}
     unlockCost: 2000000
+    isUnlocked: 0
   - viewImage: {fileID: 86731825}
     amountButton: {fileID: 1995998846}
     unlockCost: 5000000
+    isUnlocked: 0
   - viewImage: {fileID: 514012302}
     amountButton: {fileID: 812334528}
     unlockCost: 12000000
+    isUnlocked: 0
   - viewImage: {fileID: 497368374}
     amountButton: {fileID: 648916700}
     unlockCost: 30000000
+    isUnlocked: 0
   - viewImage: {fileID: 608739593}
     amountButton: {fileID: 702032304}
     unlockCost: 75000000
+    isUnlocked: 0
   - viewImage: {fileID: 1186789206}
     amountButton: {fileID: 1553689627}
     unlockCost: 180000000
+    isUnlocked: 0
   - viewImage: {fileID: 38983831}
     amountButton: {fileID: 541094098}
     unlockCost: 450000000
+    isUnlocked: 0
   - viewImage: {fileID: 1758560034}
     amountButton: {fileID: 256599991}
     unlockCost: 1000000000
+    isUnlocked: 0
   - viewImage: {fileID: 1828033081}
     amountButton: {fileID: 319198832}
     unlockCost: 2500000000
+    isUnlocked: 0
   - viewImage: {fileID: 1993437541}
     amountButton: {fileID: 1347986826}
     unlockCost: 6000000000
+    isUnlocked: 0
   - viewImage: {fileID: 1352096165}
     amountButton: {fileID: 398393237}
     unlockCost: 20000000000
+    isUnlocked: 0
   - viewImage: {fileID: 699849564}
     amountButton: {fileID: 61004991}
     unlockCost: 60000000000
+    isUnlocked: 0
   - viewImage: {fileID: 1016475430}
     amountButton: {fileID: 470812997}
     unlockCost: 200000000000
+    isUnlocked: 0
   - viewImage: {fileID: 1633024206}
     amountButton: {fileID: 1632615716}
     unlockCost: 600000000000
+    isUnlocked: 0
   - viewImage: {fileID: 1629382184}
     amountButton: {fileID: 491838390}
     unlockCost: 2000000000000
+    isUnlocked: 0
   characterContainers:
   - {fileID: 2102757366}
   - {fileID: 321657148}
@@ -34628,10 +34655,12 @@ MonoBehaviour:
   floatingTextPrefab: {fileID: 6118721640272486680, guid: 8d0129c9492ff644cac11344bca30bf0, type: 3}
   playerMoneyText: {fileID: 773062155}
   playerMoneyInSecText: {fileID: 663657051}
+  levelProgressSlider: {fileID: 466692981}
   floatHeight: 100
   randomXOffset: 150
   animationDuration: 0.8
   waitBeforeReset: 0.2
+  collectionManager: {fileID: 1999124981}
 --- !u!1 &2002115325
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,12 +14,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI floatingTextPrefab;
     [SerializeField] private TextMeshProUGUI playerMoneyText;
     [SerializeField] private TextMeshProUGUI playerMoneyInSecText;
+    [SerializeField] private Slider levelProgressSlider;
 
     [Header("Floating Text Settings")]
     [SerializeField] private float floatHeight = 100f;
     [SerializeField] private float randomXOffset = 50f;
     [SerializeField] private float animationDuration = 0.8f;
     [SerializeField] private float waitBeforeReset = 0.2f;
+
+    [Header("References")]
+    [SerializeField] private CollectionManager collectionManager;
 
     private Vector3 originalScale;
     private const float CLICK_SCALE = 0.8f;
@@ -28,7 +32,6 @@ public class GameManager : MonoBehaviour
     private long playerMoney = 0;
     private long clickPower = 1;
     private long moneyPerSecond = 0;
-    private int playerLevel = 1;
 
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
     private RectTransform buttonRect;
@@ -48,8 +51,17 @@ public class GameManager : MonoBehaviour
             InitializePool();
         }
 
-        UpdateMoneyUI();
+        if (collectionManager == null)
+        {
+            collectionManager = GetComponent<CollectionManager>();
+        }
+
         StartCoroutine(AutoIncomeCoroutine());
+    }
+
+    private void Start()
+    {
+        CheckLevelUp();
     }
 
     private void InitializePool()
@@ -86,15 +98,11 @@ public class GameManager : MonoBehaviour
         return playerMoney;
     }
 
-    public long GetClickPower()
-    {
-        return clickPower;
-    }
-
     public void AddMoney(long amount)
     {
         playerMoney += amount;
         UpdateMoneyUI();
+        CheckLevelUp();
     }
 
     public void AddClickPower(long amount)
@@ -108,16 +116,58 @@ public class GameManager : MonoBehaviour
         UpdateMoneyUI();
     }
 
+    private string GetNextLevelCostString()
+    {
+        if (collectionManager == null) return "Lvl ???";
+
+        long nextCost = collectionManager.GetNextUnlockCost();
+
+        if (nextCost <= 0)
+        {
+            return "MAX";
+        }
+
+        return Helper.FormatNumber(nextCost);
+    }
+
+    private float GetLevelProgress()
+    {
+        if (collectionManager == null) return 0;
+
+        long nextCost = collectionManager.GetNextUnlockCost();
+
+        if (nextCost <= 0) return 1f;
+
+        return Mathf.Clamp01((float)playerMoney / (float)nextCost);
+    }
+
+    private void CheckLevelUp()
+    {
+        if (collectionManager != null)
+        {
+            collectionManager.TryUnlockNextCharacter(playerMoney);
+            UpdateMoneyUI();
+        }
+    }
+
     private void UpdateMoneyUI()
     {
+        string levelInfo = GetNextLevelCostString();
+        float progress = GetLevelProgress();
+
         if (playerMoneyText != null)
         {
-            playerMoneyText.text = $"{Helper.FormatNumber(playerMoney)} / Lvl {playerLevel}";
+            playerMoneyText.text = $"{Helper.FormatNumber(playerMoney)} / {levelInfo}";
         }
 
         if (playerMoneyInSecText != null)
         {
             playerMoneyInSecText.text = $"{Helper.FormatNumber(moneyPerSecond)} монет в сек.";
+        }
+
+        if (levelProgressSlider != null)
+        {
+            levelProgressSlider.value = progress;
         }
     }
 
