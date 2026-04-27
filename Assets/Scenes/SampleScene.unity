@@ -313,7 +313,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+100 \u0432 \u0441\u0435\u043A."
+  m_text: "+200 \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+50\u043A \u0432 \u0441\u0435\u043A."
+  m_text: "+100\u041A \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2264,7 +2264,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+1 \u0432 \u0441\u0435\u043A."
+  m_text: "+2 \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4633,7 +4633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+5 \u0432 \u0441\u0435\u043A."
+  m_text: "+10 \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14638,7 +14638,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2T
+  m_text: 1T
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -16299,7 +16299,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+10\u041A \u0432 \u0441\u0435\u043A."
+  m_text: "+20\u041A \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -25591,7 +25591,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+25 \u0432 \u0441\u0435\u043A."
+  m_text: "+50 \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -27098,7 +27098,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+1\u041C \u0432 \u0441\u0435\u043A."
+  m_text: "+2\u041C \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -30329,7 +30329,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+2.5\u041A \u0432 \u0441\u0435\u043A."
+  m_text: "+5\u041A \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -34327,7 +34327,7 @@ MonoBehaviour:
   - iconImage: {fileID: 1904179611}
     buyButton: {fileID: 1739650241}
     cost: 50
-    bonusValue: 1
+    bonusValue: 2
     upgradeType: 1
   - iconImage: {fileID: 1812632429}
     buyButton: {fileID: 598674689}
@@ -34337,7 +34337,7 @@ MonoBehaviour:
   - iconImage: {fileID: 553642708}
     buyButton: {fileID: 1469413999}
     cost: 300
-    bonusValue: 5
+    bonusValue: 10
     upgradeType: 1
   - iconImage: {fileID: 1154768020}
     buyButton: {fileID: 962051486}
@@ -34347,7 +34347,7 @@ MonoBehaviour:
   - iconImage: {fileID: 1120521145}
     buyButton: {fileID: 1445738363}
     cost: 1500
-    bonusValue: 25
+    bonusValue: 50
     upgradeType: 1
   - iconImage: {fileID: 1992176358}
     buyButton: {fileID: 1245896714}
@@ -34357,7 +34357,7 @@ MonoBehaviour:
   - iconImage: {fileID: 792812608}
     buyButton: {fileID: 93296582}
     cost: 8000
-    bonusValue: 100
+    bonusValue: 200
     upgradeType: 1
   - iconImage: {fileID: 1376786054}
     buyButton: {fileID: 1817731888}
@@ -34367,7 +34367,7 @@ MonoBehaviour:
   - iconImage: {fileID: 85198881}
     buyButton: {fileID: 1996454988}
     cost: 40000
-    bonusValue: 500
+    bonusValue: 1000
     upgradeType: 1
   - iconImage: {fileID: 689677648}
     buyButton: {fileID: 605098514}
@@ -34377,7 +34377,7 @@ MonoBehaviour:
   - iconImage: {fileID: 1896746201}
     buyButton: {fileID: 411247802}
     cost: 200000
-    bonusValue: 2500
+    bonusValue: 5000
     upgradeType: 1
   - iconImage: {fileID: 187463160}
     buyButton: {fileID: 1133616375}
@@ -34387,7 +34387,7 @@ MonoBehaviour:
   - iconImage: {fileID: 378527754}
     buyButton: {fileID: 1658397280}
     cost: 1000000
-    bonusValue: 10000
+    bonusValue: 20000
     upgradeType: 1
   - iconImage: {fileID: 304823397}
     buyButton: {fileID: 1302155732}
@@ -34397,7 +34397,7 @@ MonoBehaviour:
   - iconImage: {fileID: 1599988679}
     buyButton: {fileID: 1608029673}
     cost: 5000000
-    bonusValue: 50000
+    bonusValue: 100000
     upgradeType: 1
   - iconImage: {fileID: 1098447765}
     buyButton: {fileID: 1133188099}
@@ -34407,7 +34407,7 @@ MonoBehaviour:
   - iconImage: {fileID: 735383633}
     buyButton: {fileID: 1250964053}
     cost: 25000000
-    bonusValue: 250000
+    bonusValue: 500000
     upgradeType: 1
   - iconImage: {fileID: 727562910}
     buyButton: {fileID: 642036817}
@@ -34417,7 +34417,7 @@ MonoBehaviour:
   - iconImage: {fileID: 1919400096}
     buyButton: {fileID: 809567499}
     cost: 120000000
-    bonusValue: 1000000
+    bonusValue: 2000000
     upgradeType: 1
   - iconImage: {fileID: 1892149835}
     buyButton: {fileID: 883768386}
@@ -34565,7 +34565,7 @@ MonoBehaviour:
     isUnlocked: 0
   - viewImage: {fileID: 1629382184}
     amountButton: {fileID: 491838390}
-    unlockCost: 2000000000000
+    unlockCost: 1000000000000
     isUnlocked: 0
   characterContainers:
   - {fileID: 2102757366}
@@ -34661,6 +34661,7 @@ MonoBehaviour:
   animationDuration: 0.8
   waitBeforeReset: 0.2
   collectionManager: {fileID: 1999124981}
+  sliderSmoothTime: 0.3
 --- !u!1 &2002115325
 GameObject:
   m_ObjectHideFlags: 0
@@ -34718,7 +34719,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+250\u041A \u0432 \u0441\u0435\u043A."
+  m_text: "+500\u041A \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -35553,7 +35554,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+500 \u0432 \u0441\u0435\u043A."
+  m_text: "+1\u041A \u0432 \u0441\u0435\u043A."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
