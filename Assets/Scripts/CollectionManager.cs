@@ -19,7 +19,6 @@ public class CollectionManager : MonoBehaviour
 
     private void Awake()
     {
-        // Гарантируем, что первый персонаж открыт при запуске игры
         EnsureFirstCharacterUnlocked();
         UpdateCollectionVisuals();
     }
@@ -29,7 +28,6 @@ public class CollectionManager : MonoBehaviour
     {
         Dictionary<int, long> savedCosts = new Dictionary<int, long>();
 
-        // Сохраняем только цены, так как состояние unlock мы контролируем программно для первого
         for (int i = 0; i < characters.Count; i++)
         {
             if (i < characterContainers.Count && characterContainers[i] != null)
@@ -68,11 +66,14 @@ public class CollectionManager : MonoBehaviour
                 viewImage = charImage,
                 amountButton = charButton,
                 unlockCost = cost,
-                isUnlocked = false // По умолчанию закрыт, кроме первого
+                isUnlocked = false
             };
 
             characters.Add(data);
         }
+
+        EnsureFirstCharacterUnlocked();
+        UpdateCollectionVisuals();
     }
 
     private void EnsureFirstCharacterUnlocked()
@@ -80,12 +81,19 @@ public class CollectionManager : MonoBehaviour
         if (characters.Count > 0)
         {
             CharacterData firstChar = characters[0];
-            if (!firstChar.isUnlocked)
-            {
-                firstChar.isUnlocked = true;
-                characters[0] = firstChar;
-            }
+            firstChar.isUnlocked = true;
+            characters[0] = firstChar;
         }
+    }
+
+    public int GetUnlockedCount()
+    {
+        int count = 0;
+        foreach (var charData in characters)
+        {
+            if (charData.isUnlocked) count++;
+        }
+        return count;
     }
 
     public int GetTotalCharacters()
@@ -95,7 +103,6 @@ public class CollectionManager : MonoBehaviour
 
     public long GetNextUnlockCost()
     {
-        // Начинаем с 1, так как 0-й всегда открыт
         for (int i = 1; i < characters.Count; i++)
         {
             if (!characters[i].isUnlocked)
@@ -103,7 +110,27 @@ public class CollectionManager : MonoBehaviour
                 return characters[i].unlockCost;
             }
         }
-        return 0; // Все открыты
+        return 0;
+    }
+
+    public Sprite GetCurrentCharacterSprite()
+    {
+        Sprite currentSprite = null;
+        for (int i = 0; i < characters.Count; i++)
+        {
+            if (characters[i].isUnlocked)
+            {
+                if (characters[i].viewImage != null && characters[i].viewImage.sprite != null)
+                {
+                    currentSprite = characters[i].viewImage.sprite;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        return currentSprite;
     }
 
     public void TryUnlockNextCharacter(long playerMoney)

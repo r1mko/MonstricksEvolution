@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
     private RectTransform buttonRect;
     private Transform canvasTransform;
+    private Image mainCharacterImage;
 
     private Coroutine sliderCoroutine;
     private float currentSliderValue = 0f;
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
             originalScale = mainCharacterButton.transform.localScale;
             mainCharacterButton.onClick.AddListener(OnMainCharacterClick);
             buttonRect = mainCharacterButton.GetComponent<RectTransform>();
+            mainCharacterImage = mainCharacterButton.GetComponent<Image>();
 
             Canvas canvas = buttonRect.GetComponentInParent<Canvas>();
             if (canvas != null) canvasTransform = canvas.transform;
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         CheckLevelUp();
+        UpdateCharacterImage();
     }
 
     private void InitializePool()
@@ -151,8 +154,28 @@ public class GameManager : MonoBehaviour
     {
         if (collectionManager != null)
         {
+            int previousUnlocked = collectionManager.GetUnlockedCount();
+
             collectionManager.TryUnlockNextCharacter(playerMoney);
+
+            if (collectionManager.GetUnlockedCount() > previousUnlocked)
+            {
+                UpdateCharacterImage();
+            }
+
             UpdateMoneyUI();
+        }
+    }
+
+    private void UpdateCharacterImage()
+    {
+        if (collectionManager != null && mainCharacterImage != null)
+        {
+            Sprite newSprite = collectionManager.GetCurrentCharacterSprite();
+            if (newSprite != null)
+            {
+                mainCharacterImage.sprite = newSprite;
+            }
         }
     }
 
