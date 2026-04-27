@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
 
     private bool isBoostActive = false;
     private bool shouldShowAdOnNextClick = false;
+    private bool characterInit = false;
     private Coroutine boostCoroutine;
     private Coroutine pulseCoroutine;
 
@@ -102,7 +103,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         CheckLevelUp();
-        UpdateCharacterImage();
         UpdateMoneyUI();
     }
 
@@ -381,6 +381,11 @@ public class GameManager : MonoBehaviour
             if (newSprite != null)
             {
                 mainCharacterImage.sprite = newSprite;
+                if (characterInit)
+                    SoundManager.Instance.PlayOpenCharacter();
+
+                characterInit = true;
+
             }
         }
     }
@@ -456,6 +461,7 @@ public class GameManager : MonoBehaviour
 
     private void OnMainCharacterClick()
     {
+        SoundManager.Instance.PlayClick();
         if (shouldShowAdOnNextClick)
         {
             TryShowInterstitialAd();
@@ -589,54 +595,6 @@ public class GameManager : MonoBehaviour
         text.color = resetColor;
 
         text.gameObject.SetActive(false);
-    }
-
-    [ContextMenu("Test: Add 1K")]
-    private void TestAdd1K()
-    {
-        AddMoney(1000);
-    }
-
-    [ContextMenu("Test: Add 50K")]
-    private void TestAdd50K()
-    {
-        AddMoney(50000);
-    }
-
-    [ContextMenu("Test: Add 1M")]
-    private void TestAdd1M()
-    {
-        AddMoney(1000000);
-    }
-
-    [ContextMenu("Test: Add 50M")]
-    private void TestAdd50M()
-    {
-        AddMoney(50000000);
-    }
-
-    [ContextMenu("Test: Add 1B")]
-    private void TestAdd1B()
-    {
-        AddMoney(1000000000);
-    }
-
-    [ContextMenu("Test: Add 50B")]
-    private void TestAdd50B()
-    {
-        AddMoney(50000000000L);
-    }
-
-    [ContextMenu("Test: Add 1T")]
-    private void TestAdd1T()
-    {
-        AddMoney(1000000000000L);
-    }
-
-    [ContextMenu("Test: Activate Boost")]
-    private void TestActivateBoost()
-    {
-        ActivateBoost();
     }
 
     [ContextMenu("Clear Saves")]

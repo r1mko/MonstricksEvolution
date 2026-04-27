@@ -30,7 +30,7 @@ public class NavigationManager : MonoBehaviour
     private void OpenStore()
     {
         YG2.InterstitialAdvShow();
-
+        SoundManager.Instance.PlayClick();
         if (storeScreen != null) storeScreen.SetActive(true);
         if (collectionScreen != null) collectionScreen.SetActive(false);
     }
@@ -38,7 +38,7 @@ public class NavigationManager : MonoBehaviour
     private void OpenCollection()
     {
         YG2.InterstitialAdvShow();
-
+        SoundManager.Instance.PlayClick();
         if (storeScreen != null) storeScreen.SetActive(false);
         if (collectionScreen != null) collectionScreen.SetActive(true);
     }

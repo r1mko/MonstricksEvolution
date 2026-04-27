@@ -49,6 +49,7 @@ public class StoreManager : MonoBehaviour
         if (gameManager == null) return;
 
         YG2.InterstitialAdvShow();
+        SoundManager.Instance.PlayClick();
 
         long currentMoney = gameManager.GetMoney();
 
