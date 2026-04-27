@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image boostIconImage;
     [SerializeField] private TextMeshProUGUI boostTimerText;
     [SerializeField] private float boostDuration = 60f;
+    [SerializeField] private AnimationCurve boostPulseCurve;
 
     private const string MONEY_KEY = "PlayerMoney";
     private const string CLICK_POWER_KEY = "ClickPower";
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     private bool isBoostActive = false;
     private bool shouldShowAdOnNextClick = false;
     private Coroutine boostCoroutine;
+    private Coroutine pulseCoroutine;
 
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
     private RectTransform buttonRect;
@@ -183,6 +185,7 @@ public class GameManager : MonoBehaviour
         if (isBoostActive)
         {
             if (boostCoroutine != null) StopCoroutine(boostCoroutine);
+            if (pulseCoroutine != null) StopCoroutine(pulseCoroutine);
         }
 
         isBoostActive = true;
@@ -192,7 +195,40 @@ public class GameManager : MonoBehaviour
 
         boostCoroutine = StartCoroutine(BoostTimerRoutine());
 
+        if (boostIconImage != null && boostPulseCurve != null)
+        {
+            pulseCoroutine = StartCoroutine(PulseBoostIcon());
+        }
+
         Debug.Log("[GameManager] Boost Activated! x2 Click Power for 60 seconds.");
+    }
+
+    private IEnumerator PulseBoostIcon()
+    {
+        float duration = boostPulseCurve.keys[boostPulseCurve.length - 1].time;
+
+        while (isBoostActive)
+        {
+            float timer = 0;
+            while (timer < duration && isBoostActive)
+            {
+                timer += Time.deltaTime;
+                float curveValue = boostPulseCurve.Evaluate(timer % duration);
+
+                if (boostIconImage != null)
+                {
+                    boostIconImage.transform.localScale = Vector3.one * curveValue;
+                }
+
+                yield return null;
+            }
+        }
+
+        // Сброс скейла в конце
+        if (boostIconImage != null)
+        {
+            boostIconImage.transform.localScale = Vector3.one;
+        }
     }
 
     private IEnumerator BoostTimerRoutine()
@@ -219,7 +255,14 @@ public class GameManager : MonoBehaviour
     {
         isBoostActive = false;
 
-        if (boostIconImage != null) boostIconImage.color = new Color(1, 1, 1, 0.3f);
+        if (pulseCoroutine != null) StopCoroutine(pulseCoroutine);
+
+        if (boostIconImage != null)
+        {
+            boostIconImage.color = new Color(1, 1, 1, 0.3f);
+            boostIconImage.transform.localScale = Vector3.one;
+        }
+
         if (boostTimerObject != null) boostTimerObject.SetActive(false);
 
         Debug.Log("[GameManager] Boost Deactivated.");
