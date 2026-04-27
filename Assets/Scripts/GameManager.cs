@@ -34,6 +34,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI boostTimerText;
     [SerializeField] private float boostDuration = 60f;
 
+    private const string MONEY_KEY = "PlayerMoney";
+    private const string CLICK_POWER_KEY = "ClickPower";
+    private const string AUTO_INCOME_KEY = "AutoIncome";
+
     private Vector3 originalScale;
     private const float CLICK_SCALE = 0.8f;
     private const float ANIMATION_DURATION = 0.1f;
@@ -78,11 +82,12 @@ public class GameManager : MonoBehaviour
         if (boostIconImage != null) boostIconImage.color = new Color(1, 1, 1, 0.3f);
         if (boostTimerObject != null) boostTimerObject.SetActive(false);
 
-        // Подписка на кнопку буста
         if (boostButton != null)
         {
             boostButton.onClick.AddListener(ActivateBoost);
         }
+
+        LoadProgress();
 
         StartCoroutine(AutoIncomeCoroutine());
     }
@@ -91,6 +96,7 @@ public class GameManager : MonoBehaviour
     {
         CheckLevelUp();
         UpdateCharacterImage();
+        UpdateMoneyUI();
     }
 
     private void InitializePool()
@@ -135,6 +141,7 @@ public class GameManager : MonoBehaviour
     public void AddMoney(long amount)
     {
         playerMoney += amount;
+        SaveProgress();
         UpdateMoneyUI();
         CheckLevelUp();
     }
@@ -142,11 +149,13 @@ public class GameManager : MonoBehaviour
     public void AddClickPower(long amount)
     {
         clickPower += amount;
+        SaveProgress();
     }
 
     public void AddMoneyPerSecond(long amount)
     {
         moneyPerSecond += amount;
+        SaveProgress();
         UpdateMoneyUI();
     }
 
@@ -195,6 +204,34 @@ public class GameManager : MonoBehaviour
         if (boostTimerObject != null) boostTimerObject.SetActive(false);
 
         Debug.Log("[GameManager] Boost Deactivated.");
+    }
+
+    private void SaveProgress()
+    {
+        PlayerPrefs.SetString(MONEY_KEY, playerMoney.ToString());
+        PlayerPrefs.SetString(CLICK_POWER_KEY, clickPower.ToString());
+        PlayerPrefs.SetString(AUTO_INCOME_KEY, moneyPerSecond.ToString());
+        PlayerPrefs.Save();
+    }
+
+    private void LoadProgress()
+    {
+        if (PlayerPrefs.HasKey(MONEY_KEY))
+        {
+            playerMoney = long.Parse(PlayerPrefs.GetString(MONEY_KEY));
+        }
+
+        if (PlayerPrefs.HasKey(CLICK_POWER_KEY))
+        {
+            clickPower = long.Parse(PlayerPrefs.GetString(CLICK_POWER_KEY));
+        }
+
+        if (PlayerPrefs.HasKey(AUTO_INCOME_KEY))
+        {
+            moneyPerSecond = long.Parse(PlayerPrefs.GetString(AUTO_INCOME_KEY));
+        }
+
+        Debug.Log($"[GameManager] Progress Loaded. Money: {playerMoney}, Power: {clickPower}, Auto: {moneyPerSecond}");
     }
 
     private string GetNextLevelCostString()
@@ -483,5 +520,12 @@ public class GameManager : MonoBehaviour
     private void TestActivateBoost()
     {
         ActivateBoost();
+    }
+
+    [ContextMenu("Clear Saves")]
+    private void ClearSaves()
+    {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("[GameManager] All saves cleared.");
     }
 }
