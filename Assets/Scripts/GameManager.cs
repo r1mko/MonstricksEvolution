@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Button mainCharacterButton;
     [SerializeField] private TextMeshProUGUI floatingTextPrefab;
+    [SerializeField] private TextMeshProUGUI playerMoneyText;
+    [SerializeField] private TextMeshProUGUI playerMoneyInSecText;
 
     [Header("Floating Text Settings")]
     [SerializeField] private float floatHeight = 100f;
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     private long playerMoney = 0;
     private long clickPower = 1;
+    private long moneyPerSecond = 0;
+    private int playerLevel = 1;
 
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
     private RectTransform buttonRect;
@@ -43,6 +47,9 @@ public class GameManager : MonoBehaviour
 
             InitializePool();
         }
+
+        UpdateMoneyUI();
+        StartCoroutine(AutoIncomeCoroutine());
     }
 
     private void InitializePool()
@@ -87,18 +94,47 @@ public class GameManager : MonoBehaviour
     public void AddMoney(long amount)
     {
         playerMoney += amount;
-        Debug.Log($"[GameManager] Money changed: {amount}. Total: {playerMoney}");
+        UpdateMoneyUI();
     }
 
     public void AddClickPower(long amount)
     {
         clickPower += amount;
-        Debug.Log($"[GameManager] Click Power increased by {amount}. New Power: {clickPower}");
+    }
+
+    public void AddMoneyPerSecond(long amount)
+    {
+        moneyPerSecond += amount;
+        UpdateMoneyUI();
+    }
+
+    private void UpdateMoneyUI()
+    {
+        if (playerMoneyText != null)
+        {
+            playerMoneyText.text = $"{playerMoney} / Lvl {playerLevel}";
+        }
+
+        if (playerMoneyInSecText != null)
+        {
+            playerMoneyInSecText.text = $"{moneyPerSecond} монет в сек.";
+        }
+    }
+
+    private IEnumerator AutoIncomeCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            if (moneyPerSecond > 0)
+            {
+                AddMoney(moneyPerSecond);
+            }
+        }
     }
 
     private void OnMainCharacterClick()
     {
-        Debug.Log($"[GameManager] Character Clicked! Adding {clickPower} money.");
         StartCoroutine(AnimateClick());
         SpawnFloatingText();
         AddMoney(clickPower);

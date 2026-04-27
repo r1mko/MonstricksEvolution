@@ -30,7 +30,7 @@ public class StoreManager : MonoBehaviour
     {
         if (gameManager == null)
         {
-            gameManager = FindObjectOfType<GameManager>();
+            gameManager = GetComponent<GameManager>();
         }
 
         foreach (var item in storeItems)
@@ -45,20 +45,12 @@ public class StoreManager : MonoBehaviour
 
     private void TryBuyUpgrade(StoreItemData item)
     {
-        Debug.Log($"[StoreManager] Button Pressed. Type: {item.upgradeType}, Cost: {item.cost}, Bonus: {item.bonusValue}");
-
-        if (gameManager == null)
-        {
-            Debug.LogError("[StoreManager] GameManager reference is missing!");
-            return;
-        }
+        if (gameManager == null) return;
 
         long currentMoney = gameManager.GetMoney();
-        Debug.Log($"[StoreManager] Current Money: {currentMoney}. Required: {item.cost}");
 
         if (currentMoney >= item.cost)
         {
-            Debug.Log("[StoreManager] Purchase Successful!");
             gameManager.AddMoney(-item.cost);
 
             if (item.upgradeType == UpgradeType.Click)
@@ -67,12 +59,8 @@ public class StoreManager : MonoBehaviour
             }
             else if (item.upgradeType == UpgradeType.Auto)
             {
-                Debug.Log("[StoreManager] Auto upgrade purchased (logic not implemented yet).");
+                gameManager.AddMoneyPerSecond(item.bonusValue);
             }
-        }
-        else
-        {
-            Debug.LogWarning("[StoreManager] Not enough money!");
         }
     }
 
@@ -126,7 +114,5 @@ public class StoreManager : MonoBehaviour
 
             storeItems.Add(item);
         }
-
-        Debug.Log($"[StoreManager] Initialized {storeItems.Count} items.");
     }
 }

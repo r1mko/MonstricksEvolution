@@ -12833,7 +12833,7 @@ GameObject:
   - component: {fileID: 663657052}
   - component: {fileID: 663657051}
   m_Layer: 5
-  m_Name: NameText
+  m_Name: AutoReward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34323,7 +34323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56cc8441b141e54ca8c7d0f30be6dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoreManager
-  gameManager: {fileID: 1999124983}
   storeItems:
   - iconImage: {fileID: 1904179611}
     buyButton: {fileID: 1739650241}
@@ -34446,6 +34445,7 @@ MonoBehaviour:
   - {fileID: 1957752552}
   - {fileID: 1536818845}
   - {fileID: 38928613}
+  gameManager: {fileID: 1999124983}
 --- !u!114 &1999124981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34626,6 +34626,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   mainCharacterButton: {fileID: 304543785}
   floatingTextPrefab: {fileID: 6118721640272486680, guid: 8d0129c9492ff644cac11344bca30bf0, type: 3}
+  playerMoneyText: {fileID: 773062155}
+  playerMoneyInSecText: {fileID: 663657051}
   floatHeight: 100
   randomXOffset: 150
   animationDuration: 0.8
