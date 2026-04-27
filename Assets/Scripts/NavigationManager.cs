@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class NavigationManager : MonoBehaviour
 {
@@ -28,12 +29,16 @@ public class NavigationManager : MonoBehaviour
 
     private void OpenStore()
     {
+        YG2.InterstitialAdvShow();
+
         if (storeScreen != null) storeScreen.SetActive(true);
         if (collectionScreen != null) collectionScreen.SetActive(false);
     }
 
     private void OpenCollection()
     {
+        YG2.InterstitialAdvShow();
+
         if (storeScreen != null) storeScreen.SetActive(false);
         if (collectionScreen != null) collectionScreen.SetActive(true);
     }

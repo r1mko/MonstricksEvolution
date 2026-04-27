@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -37,6 +38,9 @@ public class GameManager : MonoBehaviour
     private const string MONEY_KEY = "PlayerMoney";
     private const string CLICK_POWER_KEY = "ClickPower";
     private const string AUTO_INCOME_KEY = "AutoIncome";
+    private const string LAST_SAVE_TIME_KEY = "LastSaveTime";
+    private float timeSinceLastAd = 0f;
+    private const float AD_COOLDOWN = 30f;
 
     private Vector3 originalScale;
     private const float CLICK_SCALE = 0.8f;
@@ -47,6 +51,7 @@ public class GameManager : MonoBehaviour
     private long moneyPerSecond = 0;
 
     private bool isBoostActive = false;
+    private bool shouldShowAdOnNextClick = false;
     private Coroutine boostCoroutine;
 
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
@@ -115,6 +120,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // Таймер для кулдауна рекламы
+        if (timeSinceLastAd < AD_COOLDOWN)
+        {
+            timeSinceLastAd += Time.deltaTime;
+        }
+
 #if ENABLE_INPUT_SYSTEM
         if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
@@ -211,6 +222,8 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetString(MONEY_KEY, playerMoney.ToString());
         PlayerPrefs.SetString(CLICK_POWER_KEY, clickPower.ToString());
         PlayerPrefs.SetString(AUTO_INCOME_KEY, moneyPerSecond.ToString());
+        PlayerPrefs.SetString(LAST_SAVE_TIME_KEY, System.DateTime.Now.ToBinary().ToString());
+
         PlayerPrefs.Save();
     }
 
@@ -231,8 +244,42 @@ public class GameManager : MonoBehaviour
             moneyPerSecond = long.Parse(PlayerPrefs.GetString(AUTO_INCOME_KEY));
         }
 
+        CalculateOfflineEarnings();
+
         Debug.Log($"[GameManager] Progress Loaded. Money: {playerMoney}, Power: {clickPower}, Auto: {moneyPerSecond}");
     }
+
+    private void CalculateOfflineEarnings()
+    {
+        if (PlayerPrefs.HasKey(LAST_SAVE_TIME_KEY))
+        {
+            try
+            {
+                long binaryDate = long.Parse(PlayerPrefs.GetString(LAST_SAVE_TIME_KEY));
+                System.DateTime lastSaveTime = System.DateTime.FromBinary(binaryDate);
+                System.DateTime now = System.DateTime.Now;
+
+                System.TimeSpan timeDifference = now - lastSaveTime;
+
+                if (timeDifference.TotalMinutes > 5)
+                {
+                    long secondsOffline = (long)timeDifference.TotalSeconds;
+                    long earnedMoney = secondsOffline * moneyPerSecond;
+
+                    AddMoney(earnedMoney);
+                    Debug.Log($"[Offline] You were away for {timeDifference.Minutes} minutes. Earned: {Helper.FormatNumber(earnedMoney)}");
+
+                    // Флаг, что нужно показать рекламу при первом взаимодействии
+                    shouldShowAdOnNextClick = true;
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[Offline] Error calculating offline earnings: {e.Message}");
+            }
+        }
+    }
+
 
     private string GetNextLevelCostString()
     {
@@ -359,9 +406,29 @@ public class GameManager : MonoBehaviour
 
     private void OnMainCharacterClick()
     {
+        if (shouldShowAdOnNextClick)
+        {
+            TryShowInterstitialAd();
+            shouldShowAdOnNextClick = false;
+        }
+
         StartCoroutine(AnimateClick());
         SpawnFloatingText();
         AddMoney(GetClickPower());
+    }
+
+    private void TryShowInterstitialAd()
+    {
+        if (timeSinceLastAd >= AD_COOLDOWN)
+        {
+            YG2.InterstitialAdvShow();
+            timeSinceLastAd = 0f;
+            Debug.Log("[Ads] Interstitial Ad Showed");
+        }
+        else
+        {
+            Debug.Log($"[Ads] Ad on cooldown. Wait {AD_COOLDOWN - timeSinceLastAd:F1} seconds.");
+        }
     }
 
     private IEnumerator AnimateClick()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class StoreManager : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class StoreManager : MonoBehaviour
     private void TryBuyUpgrade(StoreItemData item)
     {
         if (gameManager == null) return;
+
+        YG2.InterstitialAdvShow();
 
         long currentMoney = gameManager.GetMoney();
 
