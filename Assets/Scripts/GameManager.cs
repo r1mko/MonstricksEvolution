@@ -28,6 +28,12 @@ public class GameManager : MonoBehaviour
     [Header("Slider Settings")]
     [SerializeField] private float sliderSmoothTime = 0.3f;
 
+    [Header("Boost Settings")]
+    [SerializeField] private Button boostButton;
+    [SerializeField] private Image boostIconImage;
+    [SerializeField] private TextMeshProUGUI boostTimerText;
+    [SerializeField] private float boostDuration = 60f;
+
     private Vector3 originalScale;
     private const float CLICK_SCALE = 0.8f;
     private const float ANIMATION_DURATION = 0.1f;
@@ -36,10 +42,14 @@ public class GameManager : MonoBehaviour
     private long clickPower = 1;
     private long moneyPerSecond = 0;
 
+    private bool isBoostActive = false;
+    private Coroutine boostCoroutine;
+
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
     private RectTransform buttonRect;
     private Transform canvasTransform;
     private Image mainCharacterImage;
+    private GameObject boostTimerObject;
 
     private Coroutine sliderCoroutine;
     private float currentSliderValue = 0f;
@@ -62,6 +72,16 @@ public class GameManager : MonoBehaviour
         if (collectionManager == null)
         {
             collectionManager = GetComponent<CollectionManager>();
+        }
+
+        if (boostTimerText != null) boostTimerObject = boostTimerText.gameObject;
+        if (boostIconImage != null) boostIconImage.color = new Color(1, 1, 1, 0.3f);
+        if (boostTimerObject != null) boostTimerObject.SetActive(false);
+
+        // Подписка на кнопку буста
+        if (boostButton != null)
+        {
+            boostButton.onClick.AddListener(ActivateBoost);
         }
 
         StartCoroutine(AutoIncomeCoroutine());
@@ -107,6 +127,11 @@ public class GameManager : MonoBehaviour
         return playerMoney;
     }
 
+    public long GetClickPower()
+    {
+        return isBoostActive ? clickPower * 2 : clickPower;
+    }
+
     public void AddMoney(long amount)
     {
         playerMoney += amount;
@@ -123,6 +148,53 @@ public class GameManager : MonoBehaviour
     {
         moneyPerSecond += amount;
         UpdateMoneyUI();
+    }
+
+    public void ActivateBoost()
+    {
+        if (isBoostActive)
+        {
+            if (boostCoroutine != null) StopCoroutine(boostCoroutine);
+        }
+
+        isBoostActive = true;
+
+        if (boostIconImage != null) boostIconImage.color = Color.white;
+        if (boostTimerObject != null) boostTimerObject.SetActive(true);
+
+        boostCoroutine = StartCoroutine(BoostTimerRoutine());
+
+        Debug.Log("[GameManager] Boost Activated! x2 Click Power for 60 seconds.");
+    }
+
+    private IEnumerator BoostTimerRoutine()
+    {
+        float timeLeft = boostDuration;
+
+        while (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+
+            if (boostTimerText != null)
+            {
+                int seconds = Mathf.CeilToInt(timeLeft);
+                boostTimerText.text = $"{seconds} сек.";
+            }
+
+            yield return null;
+        }
+
+        DeactivateBoost();
+    }
+
+    private void DeactivateBoost()
+    {
+        isBoostActive = false;
+
+        if (boostIconImage != null) boostIconImage.color = new Color(1, 1, 1, 0.3f);
+        if (boostTimerObject != null) boostTimerObject.SetActive(false);
+
+        Debug.Log("[GameManager] Boost Deactivated.");
     }
 
     private string GetNextLevelCostString()
@@ -252,7 +324,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(AnimateClick());
         SpawnFloatingText();
-        AddMoney(clickPower);
+        AddMoney(GetClickPower());
     }
 
     private IEnumerator AnimateClick()
@@ -310,7 +382,7 @@ public class GameManager : MonoBehaviour
 
         if (text != null)
         {
-            text.text = $"+{Helper.FormatNumber(clickPower)}";
+            text.text = $"+{Helper.FormatNumber(GetClickPower())}";
 
             text.transform.SetParent(canvasTransform);
             text.transform.localScale = Vector3.one;
@@ -405,5 +477,11 @@ public class GameManager : MonoBehaviour
     private void TestAdd1T()
     {
         AddMoney(1000000000000L);
+    }
+
+    [ContextMenu("Test: Activate Boost")]
+    private void TestActivateBoost()
+    {
+        ActivateBoost();
     }
 }

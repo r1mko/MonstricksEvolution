@@ -62,6 +62,10 @@ public class StoreManager : MonoBehaviour
                 gameManager.AddMoneyPerSecond(item.bonusValue);
             }
         }
+        else
+        {
+            Debug.LogWarning($"[Store] Not enough money! Need {Helper.FormatNumber(item.cost)}, have {Helper.FormatNumber(currentMoney)}");
+        }
     }
 
     [ContextMenu("Initialize Store Items")]

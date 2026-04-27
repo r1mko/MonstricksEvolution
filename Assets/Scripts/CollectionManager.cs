@@ -23,59 +23,6 @@ public class CollectionManager : MonoBehaviour
         UpdateCollectionVisuals();
     }
 
-    [ContextMenu("Initialize Collection")]
-    private void InitializeCollection()
-    {
-        Dictionary<int, long> savedCosts = new Dictionary<int, long>();
-
-        for (int i = 0; i < characters.Count; i++)
-        {
-            if (i < characterContainers.Count && characterContainers[i] != null)
-            {
-                savedCosts[i] = characters[i].unlockCost;
-            }
-        }
-
-        characters.Clear();
-
-        for (int i = 0; i < characterContainers.Count; i++)
-        {
-            GameObject container = characterContainers[i];
-            if (container == null) continue;
-
-            Transform viewTransform = container.transform.Find("View");
-            Image charImage = null;
-            if (viewTransform != null) charImage = viewTransform.GetComponent<Image>();
-
-            Transform buttonTransform = container.transform.Find("AmountButton");
-            Button charButton = null;
-            if (buttonTransform != null) charButton = buttonTransform.GetComponent<Button>();
-
-            Sprite assignedSprite = null;
-            if (i < characterSprites.Count) assignedSprite = characterSprites[i];
-
-            if (charImage != null && assignedSprite != null)
-            {
-                charImage.sprite = assignedSprite;
-            }
-
-            long cost = savedCosts.ContainsKey(i) ? savedCosts[i] : 0;
-
-            CharacterData data = new CharacterData
-            {
-                viewImage = charImage,
-                amountButton = charButton,
-                unlockCost = cost,
-                isUnlocked = false
-            };
-
-            characters.Add(data);
-        }
-
-        EnsureFirstCharacterUnlocked();
-        UpdateCollectionVisuals();
-    }
-
     private void EnsureFirstCharacterUnlocked()
     {
         if (characters.Count > 0)
@@ -175,6 +122,56 @@ public class CollectionManager : MonoBehaviour
             {
                 characters[i].amountButton.gameObject.SetActive(!characters[i].isUnlocked);
             }
+        }
+    }
+
+    [ContextMenu("Initialize Collection")]
+    private void InitializeCollection()
+    {
+        Dictionary<int, long> savedCosts = new Dictionary<int, long>();
+
+        for (int i = 0; i < characters.Count; i++)
+        {
+            if (i < characterContainers.Count && characterContainers[i] != null)
+            {
+                savedCosts[i] = characters[i].unlockCost;
+            }
+        }
+
+        characters.Clear();
+
+        for (int i = 0; i < characterContainers.Count; i++)
+        {
+            GameObject container = characterContainers[i];
+            if (container == null) continue;
+
+            Transform viewTransform = container.transform.Find("View");
+            Image charImage = null;
+            if (viewTransform != null) charImage = viewTransform.GetComponent<Image>();
+
+            Transform buttonTransform = container.transform.Find("AmountButton");
+            Button charButton = null;
+            if (buttonTransform != null) charButton = buttonTransform.GetComponent<Button>();
+
+            Sprite assignedSprite = null;
+            if (i < characterSprites.Count) assignedSprite = characterSprites[i];
+
+            if (charImage != null && assignedSprite != null)
+            {
+                charImage.sprite = assignedSprite;
+            }
+
+            long cost = savedCosts.ContainsKey(i) ? savedCosts[i] : 0;
+
+            CharacterData data = new CharacterData
+            {
+                viewImage = charImage,
+                amountButton = charButton,
+                unlockCost = cost,
+                isUnlocked = false
+            };
+
+            characters.Add(data);
         }
     }
 }
