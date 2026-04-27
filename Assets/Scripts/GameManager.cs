@@ -112,12 +112,12 @@ public class GameManager : MonoBehaviour
     {
         if (playerMoneyText != null)
         {
-            playerMoneyText.text = $"{playerMoney} / Lvl {playerLevel}";
+            playerMoneyText.text = $"{Helper.FormatNumber(playerMoney)} / Lvl {playerLevel}";
         }
 
         if (playerMoneyInSecText != null)
         {
-            playerMoneyInSecText.text = $"{moneyPerSecond} монет в сек.";
+            playerMoneyInSecText.text = $"{Helper.FormatNumber(moneyPerSecond)} монет в сек.";
         }
     }
 
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
 
         if (text != null)
         {
-            text.text = $"+{clickPower}";
+            text.text = $"+{Helper.FormatNumber(clickPower)}";
 
             text.transform.SetParent(canvasTransform);
             text.transform.localScale = Vector3.one;
@@ -248,5 +248,47 @@ public class GameManager : MonoBehaviour
         text.color = resetColor;
 
         text.gameObject.SetActive(false);
+    }
+
+    [ContextMenu("Test: Add 1K")]
+    private void TestAdd1K()
+    {
+        AddMoney(1000);
+    }
+
+    [ContextMenu("Test: Add 50K")]
+    private void TestAdd50K()
+    {
+        AddMoney(50000);
+    }
+
+    [ContextMenu("Test: Add 1M")]
+    private void TestAdd1M()
+    {
+        AddMoney(1000000);
+    }
+
+    [ContextMenu("Test: Add 50M")]
+    private void TestAdd50M()
+    {
+        AddMoney(50000000);
+    }
+
+    [ContextMenu("Test: Add 1B")]
+    private void TestAdd1B()
+    {
+        AddMoney(1000000000);
+    }
+
+    [ContextMenu("Test: Add 50B")]
+    private void TestAdd50B()
+    {
+        AddMoney(50000000000L);
+    }
+
+    [ContextMenu("Test: Add 1T")]
+    private void TestAdd1T()
+    {
+        AddMoney(1000000000000L);
     }
 }
