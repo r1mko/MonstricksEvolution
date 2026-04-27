@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private CollectionManager collectionManager;
 
+    [Header("Slider Settings")]
+    [SerializeField] private float sliderSmoothTime = 0.3f;
+
     private Vector3 originalScale;
     private const float CLICK_SCALE = 0.8f;
     private const float ANIMATION_DURATION = 0.1f;
@@ -36,6 +39,9 @@ public class GameManager : MonoBehaviour
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
     private RectTransform buttonRect;
     private Transform canvasTransform;
+
+    private Coroutine sliderCoroutine;
+    private float currentSliderValue = 0f;
 
     private void Awake()
     {
@@ -153,7 +159,7 @@ public class GameManager : MonoBehaviour
     private void UpdateMoneyUI()
     {
         string levelInfo = GetNextLevelCostString();
-        float progress = GetLevelProgress();
+        float targetProgress = GetLevelProgress();
 
         if (playerMoneyText != null)
         {
@@ -167,7 +173,43 @@ public class GameManager : MonoBehaviour
 
         if (levelProgressSlider != null)
         {
-            levelProgressSlider.value = progress;
+            SmoothUpdateSlider(targetProgress);
+        }
+    }
+
+    private void SmoothUpdateSlider(float targetValue)
+    {
+        if (sliderCoroutine != null)
+        {
+            StopCoroutine(sliderCoroutine);
+        }
+        sliderCoroutine = StartCoroutine(SmoothSliderCoroutine(targetValue));
+    }
+
+    private IEnumerator SmoothSliderCoroutine(float targetValue)
+    {
+        float startValue = currentSliderValue;
+        float timer = 0;
+
+        while (timer < sliderSmoothTime)
+        {
+            timer += Time.deltaTime;
+            float t = timer / sliderSmoothTime;
+
+            currentSliderValue = Mathf.Lerp(startValue, targetValue, t);
+
+            if (levelProgressSlider != null)
+            {
+                levelProgressSlider.value = currentSliderValue;
+            }
+
+            yield return null;
+        }
+
+        currentSliderValue = targetValue;
+        if (levelProgressSlider != null)
+        {
+            levelProgressSlider.value = currentSliderValue;
         }
     }
 
