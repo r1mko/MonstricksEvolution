@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 
         if (boostButton != null)
         {
-            boostButton.onClick.AddListener(ActivateBoost);
+            boostButton.onClick.AddListener(ShowRewardedAdForBoost);
         }
 
         LoadProgress();
@@ -120,7 +120,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // Таймер для кулдауна рекламы
         if (timeSinceLastAd < AD_COOLDOWN)
         {
             timeSinceLastAd += Time.deltaTime;
@@ -168,6 +167,15 @@ public class GameManager : MonoBehaviour
         moneyPerSecond += amount;
         SaveProgress();
         UpdateMoneyUI();
+    }
+
+    private void ShowRewardedAdForBoost()
+    {
+        YG2.RewardedAdvShow("", () =>
+        {
+            Debug.Log("[Ads] Rewarded Video Success! Activating Boost.");
+            ActivateBoost();
+        });
     }
 
     public void ActivateBoost()
@@ -269,7 +277,6 @@ public class GameManager : MonoBehaviour
                     AddMoney(earnedMoney);
                     Debug.Log($"[Offline] You were away for {timeDifference.Minutes} minutes. Earned: {Helper.FormatNumber(earnedMoney)}");
 
-                    // Флаг, что нужно показать рекламу при первом взаимодействии
                     shouldShowAdOnNextClick = true;
                 }
             }
