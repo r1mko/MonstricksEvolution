@@ -36,12 +36,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float boostDuration = 60f;
     [SerializeField] private AnimationCurve boostPulseCurve;
 
+    [Header("Ad Pre-roll UI")]
+    [SerializeField] private GameObject adPreRollPanel;
+    [SerializeField] private TextMeshProUGUI adPreRollText;
+
+    [Header("Character Animation")]
+    [SerializeField] private Animator mainCharacterAnimator;
+
     private const string MONEY_KEY = "PlayerMoney";
     private const string CLICK_POWER_KEY = "ClickPower";
     private const string AUTO_INCOME_KEY = "AutoIncome";
     private const string LAST_SAVE_TIME_KEY = "LastSaveTime";
     private float timeSinceLastAd = 0f;
-    private const float AD_COOLDOWN = 30f;
+    private const float AD_COOLDOWN = 75f;
 
     private Vector3 originalScale;
     private const float CLICK_SCALE = 0.8f;
@@ -52,10 +59,15 @@ public class GameManager : MonoBehaviour
     private long moneyPerSecond = 0;
 
     private bool isBoostActive = false;
-    private bool shouldShowAdOnNextClick = false;
     private bool characterInit = false;
+    private bool isGamePaused = false;
+    private bool isBoostPaused = false;
+    private bool isAutoIncomePaused = false;
     private Coroutine boostCoroutine;
     private Coroutine pulseCoroutine;
+    private Coroutine preRollCoroutine;
+    private Coroutine sliderCoroutine;
+    private Coroutine autoIncomeCoroutine;
 
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
     private RectTransform buttonRect;
@@ -63,14 +75,16 @@ public class GameManager : MonoBehaviour
     private Image mainCharacterImage;
     private GameObject boostTimerObject;
 
-    private Coroutine sliderCoroutine;
     private float currentSliderValue = 0f;
+    private Quaternion originalButtonRotation;
+    private float originalAnimatorSpeed = 1f;
 
     private void Awake()
     {
         if (mainCharacterButton != null)
         {
             originalScale = mainCharacterButton.transform.localScale;
+            originalButtonRotation = mainCharacterButton.transform.rotation;
             mainCharacterButton.onClick.AddListener(OnMainCharacterClick);
             buttonRect = mainCharacterButton.GetComponent<RectTransform>();
             mainCharacterImage = mainCharacterButton.GetComponent<Image>();
@@ -95,9 +109,18 @@ public class GameManager : MonoBehaviour
             boostButton.onClick.AddListener(ShowRewardedAdForBoost);
         }
 
+        if (mainCharacterAnimator == null)
+        {
+            mainCharacterAnimator = mainCharacterButton?.GetComponent<Animator>();
+        }
+        if (mainCharacterAnimator != null)
+        {
+            originalAnimatorSpeed = mainCharacterAnimator.speed;
+        }
+
         LoadProgress();
 
-        StartCoroutine(AutoIncomeCoroutine());
+        autoIncomeCoroutine = StartCoroutine(AutoIncomeCoroutine());
     }
 
     private void Start()
@@ -124,7 +147,7 @@ public class GameManager : MonoBehaviour
     {
         if (timeSinceLastAd < AD_COOLDOWN)
         {
-            timeSinceLastAd += Time.deltaTime;
+            timeSinceLastAd += Time.unscaledDeltaTime;
         }
 
 #if ENABLE_INPUT_SYSTEM
@@ -189,6 +212,7 @@ public class GameManager : MonoBehaviour
         }
 
         isBoostActive = true;
+        isBoostPaused = false;
 
         if (boostIconImage != null) boostIconImage.color = Color.white;
         if (boostTimerObject != null) boostTimerObject.SetActive(true);
@@ -212,6 +236,12 @@ public class GameManager : MonoBehaviour
             float timer = 0;
             while (timer < duration && isBoostActive)
             {
+                if (isBoostPaused)
+                {
+                    yield return null;
+                    continue;
+                }
+
                 timer += Time.deltaTime;
                 float curveValue = boostPulseCurve.Evaluate(timer % duration);
 
@@ -224,7 +254,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Сброс скейла в конце
         if (boostIconImage != null)
         {
             boostIconImage.transform.localScale = Vector3.one;
@@ -237,6 +266,12 @@ public class GameManager : MonoBehaviour
 
         while (timeLeft > 0)
         {
+            if (isBoostPaused)
+            {
+                yield return null;
+                continue;
+            }
+
             timeLeft -= Time.deltaTime;
 
             if (boostTimerText != null)
@@ -254,6 +289,7 @@ public class GameManager : MonoBehaviour
     private void DeactivateBoost()
     {
         isBoostActive = false;
+        isBoostPaused = false;
 
         if (pulseCoroutine != null) StopCoroutine(pulseCoroutine);
 
@@ -295,39 +331,7 @@ public class GameManager : MonoBehaviour
             moneyPerSecond = long.Parse(PlayerPrefs.GetString(AUTO_INCOME_KEY));
         }
 
-        CalculateOfflineEarnings();
-
         Debug.Log($"[GameManager] Progress Loaded. Money: {playerMoney}, Power: {clickPower}, Auto: {moneyPerSecond}");
-    }
-
-    private void CalculateOfflineEarnings()
-    {
-        if (PlayerPrefs.HasKey(LAST_SAVE_TIME_KEY))
-        {
-            try
-            {
-                long binaryDate = long.Parse(PlayerPrefs.GetString(LAST_SAVE_TIME_KEY));
-                System.DateTime lastSaveTime = System.DateTime.FromBinary(binaryDate);
-                System.DateTime now = System.DateTime.Now;
-
-                System.TimeSpan timeDifference = now - lastSaveTime;
-
-                if (timeDifference.TotalMinutes > 5)
-                {
-                    long secondsOffline = (long)timeDifference.TotalSeconds;
-                    long earnedMoney = secondsOffline * moneyPerSecond;
-
-                    AddMoney(earnedMoney);
-                    Debug.Log($"[Offline] You were away for {timeDifference.Minutes} minutes. Earned: {Helper.FormatNumber(earnedMoney)}");
-
-                    shouldShowAdOnNextClick = true;
-                }
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError($"[Offline] Error calculating offline earnings: {e.Message}");
-            }
-        }
     }
 
 
@@ -452,6 +456,9 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
+
+            if (isAutoIncomePaused) continue;
+
             if (moneyPerSecond > 0)
             {
                 AddMoney(moneyPerSecond);
@@ -461,13 +468,11 @@ public class GameManager : MonoBehaviour
 
     private void OnMainCharacterClick()
     {
-        SoundManager.Instance.PlayClick();
-        if (shouldShowAdOnNextClick)
-        {
-            TryShowInterstitialAd();
-            shouldShowAdOnNextClick = false;
-        }
+        if (isGamePaused) return;
 
+        SoundManager.Instance.PlayClick();
+
+        TryShowInterstitialAd();
         StartCoroutine(AnimateClick());
         SpawnFloatingText();
         AddMoney(GetClickPower());
@@ -477,13 +482,89 @@ public class GameManager : MonoBehaviour
     {
         if (timeSinceLastAd >= AD_COOLDOWN)
         {
-            YG2.InterstitialAdvShow();
-            timeSinceLastAd = 0f;
-            Debug.Log("[Ads] Interstitial Ad Showed");
+            StartAdPreRollSequence();
         }
         else
         {
             Debug.Log($"[Ads] Ad on cooldown. Wait {AD_COOLDOWN - timeSinceLastAd:F1} seconds.");
+        }
+    }
+
+    private void StartAdPreRollSequence()
+    {
+        if (preRollCoroutine != null) StopCoroutine(preRollCoroutine);
+
+        SetGamePause(true);
+
+        if (adPreRollPanel != null) adPreRollPanel.SetActive(true);
+
+        preRollCoroutine = StartCoroutine(PreRollCountdownRoutine());
+    }
+
+    private IEnumerator PreRollCountdownRoutine()
+    {
+        int countdown = 3;
+
+        while (countdown > 0)
+        {
+            if (adPreRollText != null)
+            {
+                adPreRollText.text = $"Просмотр рекламы через: {countdown}";
+            }
+
+            yield return new WaitForSeconds(1f);
+            countdown--;
+        }
+
+        ShowActualAd();
+    }
+
+    private void ShowActualAd()
+    {
+        if (adPreRollPanel != null) adPreRollPanel.SetActive(false);
+
+        SetGamePause(false);
+
+        YG2.InterstitialAdvShow();
+        timeSinceLastAd = 0f;
+
+        Debug.Log("[Ads] Interstitial Ad Showed");
+    }
+
+    private void SetGamePause(bool pause)
+    {
+        isGamePaused = pause;
+        isBoostPaused = pause;
+        isAutoIncomePaused = pause;
+
+        if (pause)
+        {
+            AudioListener.pause = true;
+
+            if (mainCharacterAnimator != null)
+            {
+                originalAnimatorSpeed = mainCharacterAnimator.speed;
+                mainCharacterAnimator.speed = 0f;
+            }
+
+            if (buttonRect != null)
+            {
+                originalButtonRotation = buttonRect.rotation;
+            }
+        }
+        else
+        {
+            AudioListener.pause = false;
+
+            if (mainCharacterAnimator != null)
+            {
+                mainCharacterAnimator.speed = originalAnimatorSpeed;
+            }
+
+            if (buttonRect != null)
+            {
+                buttonRect.rotation = originalButtonRotation;
+            }
         }
     }
 

@@ -47,8 +47,6 @@ public class StoreManager : MonoBehaviour
     private void TryBuyUpgrade(StoreItemData item)
     {
         if (gameManager == null) return;
-
-        YG2.InterstitialAdvShow();
         SoundManager.Instance.PlayClick();
 
         long currentMoney = gameManager.GetMoney();
